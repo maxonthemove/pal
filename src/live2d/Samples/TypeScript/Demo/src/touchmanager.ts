@@ -7,7 +7,7 @@
 
 export class TouchManager {
   /**
-   * コンストラクタ
+   * 构造函数
    */
   constructor() {
     this._startX = 0.0;
@@ -91,9 +91,9 @@ export class TouchManager {
   }
 
   /**
-   * タッチ開始時イベント
-   * @param deviceX タッチした画面のxの値
-   * @param deviceY タッチした画面のyの値
+   * 触摸开始时的事件
+   * @param deviceX 触摸屏幕的x值
+   * @param deviceY 触摸屏幕的y值
    */
   public touchesBegan(deviceX: number, deviceY: number): void {
     this._lastX = deviceX;
@@ -106,9 +106,9 @@ export class TouchManager {
   }
 
   /**
-   * ドラッグ時のイベント
-   * @param deviceX タッチした画面のxの値
-   * @param deviceY タッチした画面のyの値
+   * 拖动时的事件
+   * @param deviceX 触摸屏幕的x值
+   * @param deviceY 触摸屏幕的y值
    */
   public touchesMoved(deviceX: number, deviceY: number): void {
     this._lastX = deviceX;
@@ -118,8 +118,8 @@ export class TouchManager {
   }
 
   /**
-   * フリックの距離測定
-   * @return フリック距離
+   * 测量轻扫的距离
+   * @return 轻扫距离
    */
   public getFlickDistance(): number {
     return this.calculateDistance(
@@ -131,12 +131,12 @@ export class TouchManager {
   }
 
   /**
-   * 点１から点２への距離を求める
+   * 计算点1到点2的距离
    *
-   * @param x1 １つ目のタッチした画面のxの値
-   * @param y1 １つ目のタッチした画面のyの値
-   * @param x2 ２つ目のタッチした画面のxの値
-   * @param y2 ２つ目のタッチした画面のyの値
+   * @param x1 第一个触摸点的x值
+   * @param y1 第一个触摸点的y值
+   * @param x2 第二个触摸点的x值
+   * @param y2 第二个触摸点的y值
    */
   public calculateDistance(
     x1: number,
@@ -169,18 +169,18 @@ export class TouchManager {
     );
   }
 
-  _startY: number; // タッチを開始した時のxの値
-  _startX: number; // タッチを開始した時のyの値
-  _lastX: number; // シングルタッチ時のxの値
-  _lastY: number; // シングルタッチ時のyの値
-  _lastX1: number; // ダブルタッチ時の一つ目のxの値
-  _lastY1: number; // ダブルタッチ時の一つ目のyの値
-  _lastX2: number; // ダブルタッチ時の二つ目のxの値
-  _lastY2: number; // ダブルタッチ時の二つ目のyの値
-  _lastTouchDistance: number; // 2本以上でタッチしたときの指の距離
-  _deltaX: number; // 前回の値から今回の値へのxの移動距離。
-  _deltaY: number; // 前回の値から今回の値へのyの移動距離。
-  _scale: number; // このフレームで掛け合わせる拡大率。拡大操作中以外は1。
-  _touchSingle: boolean; // シングルタッチ時はtrue
-  _flipAvailable: boolean; // フリップが有効かどうか
+  _startY: number; // 开始触摸时的x值
+  _startX: number; // 开始触摸时的y值
+  _lastX: number; // 单点触摸时的x值
+  _lastY: number; // 单点触摸时的y值
+  _lastX1: number; // 双点触摸时第一个点的x值
+  _lastY1: number; // 双点触摸时第一个点的y值
+  _lastX2: number; // 双点触摸时第二个点的x值
+  _lastY2: number; // 双点触摸时第二个点的y值
+  _lastTouchDistance: number; // 两指以上触摸时手指间的距离
+  _deltaX: number; // 从上一次值到这次值的x移动距离
+  _deltaY: number; // 从上一次值到这次值的y移动距离
+  _scale: number; // 这一帧要乘上的缩放率。非缩放操作时为1
+  _touchSingle: boolean; // 单点触摸时为true
+  _flipAvailable: boolean; // 轻扫是否有效
 }
