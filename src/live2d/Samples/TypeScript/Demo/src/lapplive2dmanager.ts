@@ -1,8 +1,8 @@
 /**
- * Copyright(c) Live2D Inc. All rights reserved.
+ * 版权所有（C）Live2D Inc.保留所有权利。
  *
- * Use of this source code is governed by the Live2D Open Software license
- * that can be found at https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html.
+ * 此源代码的使用由LIVE2D打开软件许可证约束
+ * 可以在https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html上找到。
  */
 
 import { CubismMatrix44 } from '@framework/math/cubismmatrix44';
@@ -15,22 +15,22 @@ import { LAppPal } from './lapppal';
 import { LAppSubdelegate } from './lappsubdelegate';
 
 /**
- * サンプルアプリケーションにおいてCubismModelを管理するクラス
- * モデル生成と破棄、タップイベントの処理、モデル切り替えを行う。
+ * 在样本应用中管理立体模型的类
+ * 生成和丢弃模型，处理点击事件以及开关模型。
  */
 export class LAppLive2DManager {
   /**
-   * 現在のシーンで保持しているすべてのモデルを解放する
+   * 免费在当前场景中举行的所有模型
    */
   private releaseAllModel(): void {
     this._models.clear();
   }
 
   /**
-   * 画面をドラッグした時の処理
+   * 拖放屏幕时该怎么办
    *
-   * @param x 画面のX座標
-   * @param y 画面のY座標
+   * @param x 屏幕X坐标
+   * @param y 屏幕Y坐标
    */
   public onDrag(x: number, y: number): void {
     const model: LAppModel = this._models.at(0);
@@ -40,10 +40,10 @@ export class LAppLive2DManager {
   }
 
   /**
-   * 画面をタップした時の処理
+   * 点击屏幕时该怎么办
    *
-   * @param x 画面のX座標
-   * @param y 画面のY座標
+   * @param x 屏幕X坐标
+   * @param y 屏幕Y坐标
    */
   public onTap(x: number, y: number): void {
     if (LAppDefine.DebugLogEnable) {
@@ -73,8 +73,8 @@ export class LAppLive2DManager {
   }
 
   /**
-   * 画面を更新するときの処理
-   * モデルの更新処理及び描画処理を行う
+   * 更新屏幕时该怎么办
+   * 执行模型更新和绘制过程
    */
   public onUpdate(): void {
     const { width, height } = this._subdelegate.getCanvas();
@@ -84,26 +84,26 @@ export class LAppLive2DManager {
 
     if (model.getModel()) {
       if (model.getModel().getCanvasWidth() > 1.0 && width < height) {
-        // 横に長いモデルを縦長ウィンドウに表示する際モデルの横サイズでscaleを算出する
+        // 在垂直窗口中显示长水平模型时，根据模型的宽度大小来计算量表
         model.getModelMatrix().setWidth(2.0);
         projection.scale(1.0, width / height);
       } else {
         projection.scale(height / width, 1.0);
       }
 
-      // 必要があればここで乗算
+      // 如有必要
       if (this._viewMatrix != null) {
         projection.multiplyByMatrix(this._viewMatrix);
       }
     }
 
     model.update();
-    model.draw(projection); // 参照渡しなのでprojectionは変質する。
+    model.draw(projection); // 由于它是通过引用传递的，因此投影将改变。
   }
 
   /**
-   * 次のシーンに切りかえる
-   * サンプルアプリケーションではモデルセットの切り替えを行う。
+   * 转向下一个场景
+   * 示例应用程序在模型集之间切换。
    */
   public nextScene(): void {
     const no: number = (this._sceneIndex + 1) % LAppDefine.ModelDirSize;
@@ -111,8 +111,8 @@ export class LAppLive2DManager {
   }
 
   /**
-   * シーンを切り替える
-   * サンプルアプリケーションではモデルセットの切り替えを行う。
+   * 切换场景
+   * 示例应用程序在模型集之间切换。
    * @param index
    */
   private changeScene(index: number): void {
@@ -122,9 +122,9 @@ export class LAppLive2DManager {
       LAppPal.printMessage(`[APP]model index: ${this._sceneIndex}`);
     }
 
-    // ModelDir[]に保持したディレクトリ名から
-    // model3.jsonのパスを決定する。
-    // ディレクトリ名とmodel3.jsonの名前を一致させておくこと。
+    // 从ModelDir中的目录名称[]
+    // 确定Model3.json的路径。
+    // 确保目录名称匹配model3.json的名称。
     const model: string = LAppDefine.ModelDir[index];
     const modelPath: string = LAppDefine.ResourcesPath + model + '/';
     let modelJsonName: string = LAppDefine.ModelDir[index];
@@ -144,7 +144,7 @@ export class LAppLive2DManager {
   }
 
   /**
-   * モデルの追加
+   * 添加模型
    */
   public addModel(sceneIndex: number = 0): void {
     this._sceneIndex = sceneIndex;
@@ -152,7 +152,7 @@ export class LAppLive2DManager {
   }
 
   /**
-   * コンストラクタ
+   * 构造函数
    */
   public constructor() {
     this._subdelegate = null;
@@ -162,12 +162,12 @@ export class LAppLive2DManager {
   }
 
   /**
-   * 解放する。
+   * 发布。
    */
   public release(): void {}
 
   /**
-   * 初期化する。
+   * 初始化。
    * @param subdelegate
    */
   public initialize(subdelegate: LAppSubdelegate): void {
@@ -176,20 +176,20 @@ export class LAppLive2DManager {
   }
 
   /**
-   * 自身が所属するSubdelegate
+   * 您属于的子详细信息
    */
   private _subdelegate: LAppSubdelegate;
 
-  _viewMatrix: CubismMatrix44; // モデル描画に用いるview行列
-  _models: csmVector<LAppModel>; // モデルインスタンスのコンテナ
-  private _sceneIndex: number; // 表示するシーンのインデックス値
+  _viewMatrix: CubismMatrix44; // 查看用于模型绘图的矩阵
+  _models: csmVector<LAppModel>; // 模型实例的容器
+  private _sceneIndex: number; // 要显示的场景的索引值
 
-  // モーション再生開始のコールバック関数
+  // 开始运动播放的回调功能
   beganMotion = (self: ACubismMotion): void => {
     LAppPal.printMessage('Motion Began:');
     console.log(self);
   };
-  // モーション再生終了のコールバック関数
+  // 终止运动播放的回调功能
   finishedMotion = (self: ACubismMotion): void => {
     LAppPal.printMessage('Motion Finished:');
     console.log(self);

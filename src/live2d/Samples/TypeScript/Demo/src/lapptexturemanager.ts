@@ -1,27 +1,27 @@
 /**
- * Copyright(c) Live2D Inc. All rights reserved.
+ * 版权所有（C）Live2D Inc.保留所有权利。
  *
- * Use of this source code is governed by the Live2D Open Software license
- * that can be found at https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html.
+ * 此源代码的使用由LIVE2D打开软件许可证约束
+ * 可以在https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html上找到。
  */
 
 import { csmVector, iterator } from '@framework/type/csmvector';
 import { LAppGlManager } from './lappglmanager';
 
 /**
- * テクスチャ管理クラス
- * 画像読み込み、管理を行うクラス。
+ * 纹理管理课程
+ * 加载和管理图像的类。
  */
 export class LAppTextureManager {
   /**
-   * コンストラクタ
+   * 构造函数
    */
   public constructor() {
     this._textures = new csmVector<TextureInfo>();
   }
 
   /**
-   * 解放する。
+   * 发布。
    */
   public release(): void {
     for (
@@ -35,18 +35,18 @@ export class LAppTextureManager {
   }
 
   /**
-   * 画像読み込み
+   * 负载图像
    *
-   * @param fileName 読み込む画像ファイルパス名
-   * @param usePremultiply Premult処理を有効にするか
-   * @return 画像情報、読み込み失敗時はnullを返す
+   * @param fileName 图像文件路径名导入
+   * @param usePremultiply 您是否启用了预制处理？
+   * @return 图像信息，如果加载失败，则返回零
    */
   public createTextureFromPngFile(
     fileName: string,
     usePremultiply: boolean,
     callback: (textureInfo: TextureInfo) => void
   ): void {
-    // search loaded texture already
+    // 已经搜索已加载的纹理
     for (
       let ite: iterator<TextureInfo> = this._textures.begin();
       ite.notEqual(this._textures.end());
@@ -56,9 +56,9 @@ export class LAppTextureManager {
         ite.ptr().fileName == fileName &&
         ite.ptr().usePremultply == usePremultiply
       ) {
-        // 2回目以降はキャッシュが使用される(待ち時間なし)
-        // WebKitでは同じImageのonloadを再度呼ぶには再インスタンスが必要
-        // 詳細：https://stackoverflow.com/a/5024181
+        // 第二次之后，将使用缓存（无延迟）
+        // WebKit要求重新确定再次致电同一图像的on载。
+        // 详细信息：https：//stackoverflow.com/a/5024181
         ite.ptr().img = new Image();
         ite
           .ptr()
@@ -70,20 +70,20 @@ export class LAppTextureManager {
       }
     }
 
-    // データのオンロードをトリガーにする
+    // 触发数据on载
     const img = new Image();
     img.addEventListener(
       'load',
       (): void => {
-        // テクスチャオブジェクトの作成
+        // 创建纹理对象
         const tex: WebGLTexture = this._glManager.getGl().createTexture();
 
-        // テクスチャを選択
+        // 选择一个纹理
         this._glManager
           .getGl()
           .bindTexture(this._glManager.getGl().TEXTURE_2D, tex);
 
-        // テクスチャにピクセルを書き込む
+        // 将像素写成纹理
         this._glManager
           .getGl()
           .texParameteri(
@@ -99,7 +99,7 @@ export class LAppTextureManager {
             this._glManager.getGl().LINEAR
           );
 
-        // Premult処理を行わせる
+        // 执行预言处理
         if (usePremultiply) {
           this._glManager
             .getGl()
@@ -109,7 +109,7 @@ export class LAppTextureManager {
             );
         }
 
-        // テクスチャにピクセルを書き込む
+        // 将像素写成纹理
         this._glManager
           .getGl()
           .texImage2D(
@@ -121,12 +121,12 @@ export class LAppTextureManager {
             img
           );
 
-        // ミップマップを生成
+        // 生成mipmap
         this._glManager
           .getGl()
           .generateMipmap(this._glManager.getGl().TEXTURE_2D);
 
-        // テクスチャをバインド
+        // 绑定纹理
         this._glManager
           .getGl()
           .bindTexture(this._glManager.getGl().TEXTURE_2D, null);
@@ -152,9 +152,9 @@ export class LAppTextureManager {
   }
 
   /**
-   * 画像の解放
+   * 图像释放
    *
-   * 配列に存在する画像全てを解放する。
+   * 释放阵列中存在的所有图像。
    */
   public releaseTextures(): void {
     for (let i = 0; i < this._textures.getSize(); i++) {
@@ -166,10 +166,10 @@ export class LAppTextureManager {
   }
 
   /**
-   * 画像の解放
+   * 图像释放
    *
-   * 指定したテクスチャの画像を解放する。
-   * @param texture 解放するテクスチャ
+   * 释放指定纹理的图像。
+   * @param texture 释放质地
    */
   public releaseTextureByTexture(texture: WebGLTexture): void {
     for (let i = 0; i < this._textures.getSize(); i++) {
@@ -185,10 +185,10 @@ export class LAppTextureManager {
   }
 
   /**
-   * 画像の解放
+   * 图像释放
    *
-   * 指定した名前の画像を解放する。
-   * @param fileName 解放する画像ファイルパス名
+   * 用指定名称释放图像。
+   * @param fileName 要发布的图像文件路径名
    */
   public releaseTextureByFilePath(fileName: string): void {
     for (let i = 0; i < this._textures.getSize(); i++) {
@@ -202,7 +202,7 @@ export class LAppTextureManager {
   }
 
   /**
-   * setter
+   * 放
    * @param glManager
    */
   public setGlManager(glManager: LAppGlManager): void {
@@ -214,13 +214,13 @@ export class LAppTextureManager {
 }
 
 /**
- * 画像情報構造体
+ * Image information structure
  */
 export class TextureInfo {
   img: HTMLImageElement; // 画像
-  id: WebGLTexture = null; // テクスチャ
+  id: WebGLTexture = null; // 质地
   width = 0; // 横幅
-  height = 0; // 高さ
-  usePremultply: boolean; // Premult処理を有効にするか
-  fileName: string; // ファイル名
+  height = 0; // 高度
+  usePremultply: boolean; // 您是否启用了预制处理？
+  fileName: string; // 文件名
 }

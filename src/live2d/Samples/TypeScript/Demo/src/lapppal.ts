@@ -1,24 +1,24 @@
 /**
- * Copyright(c) Live2D Inc. All rights reserved.
+ * 版权所有（C）Live2D Inc.保留所有权利。
  *
- * Use of this source code is governed by the Live2D Open Software license
- * that can be found at https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html.
+ * 此源代码的使用由LIVE2D打开软件许可证约束
+ * 可以在https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html上找到。
  */
 
 /**
- * プラットフォーム依存機能を抽象化する Cubism Platform Abstraction Layer.
+ * 立体主义平台抽象层，抽象依赖平台的特征。
  *
- * ファイル読み込みや時刻取得等のプラットフォームに依存する関数をまとめる。
+ * 汇总了平台依赖性功能，例如文件加载和时间获取。
  */
 export class LAppPal {
   /**
-   * ファイルをバイトデータとして読みこむ
+   * 将文件读取为字节数据
    *
-   * @param filePath 読み込み対象ファイルのパス
+   * @param filePath 要加载的文件的路径
    * @return
    * {
-   *      buffer,   読み込んだバイトデータ
-   *      size        ファイルサイズ
+   *      缓冲区，读取字节数据
+   *      大小文件大小
    * }
    */
   public static loadFileAsBytes(
@@ -31,8 +31,8 @@ export class LAppPal {
   }
 
   /**
-   * デルタ時間（前回フレームとの差分）を取得する
-   * @return デルタ時間[ms]
+   * 获取三角洲时间（与上一个帧有所不同）
+   * @return 增量时间[MS]
    */
   public static getDeltaTime(): number {
     return this.deltaTime;
@@ -45,8 +45,8 @@ export class LAppPal {
   }
 
   /**
-   * メッセージを出力する
-   * @param message 文字列
+   * 输出消息
+   * @param message 细绳
    */
   public static printMessage(message: string): void {
     console.log(message);
